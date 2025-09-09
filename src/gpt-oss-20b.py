@@ -22,11 +22,34 @@ from collections import Counter
 
 # A very small built‑in list – replace or extend it as you wish
 DEFAULT_WORD_LIST = [
-    "apple", "brain", "candy", "delta", "eagle", "fancy", "giant",
-    "hotel", "input", "joker", "knock", "lemon", "mango", "naval",
-    "ocean", "piano", "queen", "robot", "sugar", "tiger", "ultra",
-    "vivid", "whale", "xenon", "yield", "zebra",
+    "apple",
+    "brain",
+    "candy",
+    "delta",
+    "eagle",
+    "fancy",
+    "giant",
+    "hotel",
+    "input",
+    "joker",
+    "knock",
+    "lemon",
+    "mango",
+    "naval",
+    "ocean",
+    "piano",
+    "queen",
+    "robot",
+    "sugar",
+    "tiger",
+    "ultra",
+    "vivid",
+    "whale",
+    "xenon",
+    "yield",
+    "zebra",
 ]
+
 
 def load_word_list(fname: Path | None = None) -> list[str]:
     """
@@ -55,26 +78,30 @@ def load_word_list(fname: Path | None = None) -> list[str]:
 
     return words
 
+
 # ------------------------------------------------------------
 # 2. Colour codes & helpers
 # ------------------------------------------------------------
 
 # ANSI escape sequences for green, yellow, gray, and reset
-GREEN  = "\033[1;32m"   # bright green
-YELLOW = "\033[1;33m"   # bright yellow
-GRAY   = "\033[1;37m"   # bright white (treated as gray)
-RESET  = "\033[0m"
+GREEN = "\033[1;32m"  # bright green
+YELLOW = "\033[1;33m"  # bright yellow
+GRAY = "\033[1;37m"  # bright white (treated as gray)
+RESET = "\033[0m"
 
 # Unicode block characters to represent feedback
 # (colour will be applied to the whole block)
 SQUARE = "■"
 
+
 def coloured_square(square: str, colour: str) -> str:
     return f"{colour}{square}{RESET}"
+
 
 # ------------------------------------------------------------
 # 3. Feedback generator
 # ------------------------------------------------------------
+
 
 def generate_feedback(guess: str, target: str) -> list[str]:
     """
@@ -83,7 +110,7 @@ def generate_feedback(guess: str, target: str) -> list[str]:
       YELLOW  – correct letter, wrong spot
       GRAY    – letter not in the target
     """
-    feedback = [''] * 5
+    feedback = [""] * 5
     target_chars = list(target)
 
     # First pass – greens
@@ -94,7 +121,7 @@ def generate_feedback(guess: str, target: str) -> list[str]:
 
     # Second pass – yellows
     for i, g in enumerate(guess):
-        if feedback[i]:   # already green
+        if feedback[i]:  # already green
             continue
         if g in target_chars:
             feedback[i] = YELLOW
@@ -104,9 +131,11 @@ def generate_feedback(guess: str, target: str) -> list[str]:
 
     return feedback
 
+
 # ------------------------------------------------------------
 # 4. Game loop
 # ------------------------------------------------------------
+
 
 def play_wordle(word_list: list[str]) -> None:
     target = random.choice(word_list)
@@ -144,13 +173,16 @@ def play_wordle(word_list: list[str]) -> None:
     # If loop completes, user failed
     print(f"💀 Out of attempts! The word was '{target}'. Better luck next time.")
 
+
 # ------------------------------------------------------------
 # 5. Program entry point
 # ------------------------------------------------------------
 
+
 def main() -> None:
     word_list = load_word_list()
     play_wordle(word_list)
+
 
 if __name__ == "__main__":
     main()

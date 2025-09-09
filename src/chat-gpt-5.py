@@ -9,23 +9,83 @@ import sys
 
 # --- Small built-in lists (replace/expand as you like) ---
 ANSWERS = [
-    "crane","slice","trace","shard","grace","plane","flint","blaze","pride","smile",
-    "cough","light","sound","cheap","beach","candy","swing","bloom","faint","scent",
-    "stone","night","water","cloud","laugh","train","drive","build","watch","spark"
+    "crane",
+    "slice",
+    "trace",
+    "shard",
+    "grace",
+    "plane",
+    "flint",
+    "blaze",
+    "pride",
+    "smile",
+    "cough",
+    "light",
+    "sound",
+    "cheap",
+    "beach",
+    "candy",
+    "swing",
+    "bloom",
+    "faint",
+    "scent",
+    "stone",
+    "night",
+    "water",
+    "cloud",
+    "laugh",
+    "train",
+    "drive",
+    "build",
+    "watch",
+    "spark",
 ]
 
 # allowed guesses - combine answers + some common 5-letter words
-ALLOWED = sorted(set(ANSWERS + [
-    "about","other","which","their","there","apple","match","bring","young","panel",
-    "staff","again","under","could","where","house","brown","fight","worry","often",
-    "piano","guilt","purge","spite","gamer","quiet","group","spend","study","glide"
-]))
+ALLOWED = sorted(
+    set(
+        ANSWERS
+        + [
+            "about",
+            "other",
+            "which",
+            "their",
+            "there",
+            "apple",
+            "match",
+            "bring",
+            "young",
+            "panel",
+            "staff",
+            "again",
+            "under",
+            "could",
+            "where",
+            "house",
+            "brown",
+            "fight",
+            "worry",
+            "often",
+            "piano",
+            "guilt",
+            "purge",
+            "spite",
+            "gamer",
+            "quiet",
+            "group",
+            "spend",
+            "study",
+            "glide",
+        ]
+    )
+)
 
 # ANSI color helpers
 RESET = "\033[0m"
-GREEN_BG = "\033[30;42m"   # black text on green background
+GREEN_BG = "\033[30;42m"  # black text on green background
 YELLOW_BG = "\033[30;43m"  # black text on yellow background
-GRAY_BG = "\033[37;100m"   # white text on bright black (gray) background
+GRAY_BG = "\033[37;100m"  # white text on bright black (gray) background
+
 
 def print_colored(letters, statuses):
     """Print letters with colored backgrounds based on statuses list."""
@@ -38,6 +98,7 @@ def print_colored(letters, statuses):
         else:
             out.append(f"{GRAY_BG} {ch.upper()} {RESET}")
     print(" ".join(out))
+
 
 def evaluate_guess(solution, guess):
     """
@@ -68,6 +129,7 @@ def evaluate_guess(solution, guess):
             sol_chars[j] = None  # consume
     return statuses
 
+
 def input_guess(allowed):
     """Prompt user for a guess; enforce 5 letters and membership in allowed list."""
     while True:
@@ -83,6 +145,7 @@ def input_guess(allowed):
             continue
         return guess
 
+
 def play_round():
     solution = random.choice(ANSWERS)
     attempts = 6
@@ -95,11 +158,14 @@ def play_round():
         statuses = evaluate_guess(solution, guess)
         print_colored(guess, statuses)
         if all(s == "green" for s in statuses):
-            print(f"\n🎉 You got it in {turn} guess{'es' if turn>1 else ''}! The word was '{solution.upper()}'.")
+            print(
+                f"\n🎉 You got it in {turn} guess{'es' if turn>1 else ''}! The word was '{solution.upper()}'."
+            )
             break
     else:
         print(f"\n☠️  Out of attempts — the word was '{solution.upper()}'.")
     print()
+
 
 def main():
     try:
@@ -112,6 +178,7 @@ def main():
     except (KeyboardInterrupt, EOFError):
         print("\nGoodbye!")
         sys.exit(0)
+
 
 if __name__ == "__main__":
     main()
